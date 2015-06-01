@@ -1,7 +1,10 @@
 <?php
 /**
-*
-**/
+ * dasBug class
+ *
+ * @package default
+ * @author  Paul McIntosh
+ */
 class dasBug{
 
 	// constructor
@@ -28,8 +31,12 @@ class dasBug{
 
 	// detect type
 	public function detect_type($module=false){
+		
+		
+		echo "value= ".$module."<br/>";
 
 		// gettype()
+		echo gettype($module);
 
 		//is_numeric, is_bool, is_null, is_float, is_int, is_string, is_object, is_array
 
