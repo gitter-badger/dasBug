@@ -1,5 +1,5 @@
 <?php
-require_once ="dasBug.php";
+require_once "dasBug.php";
 
 // test array
 $test=array(
@@ -13,5 +13,8 @@ $test=array(
 		)
 	)
 );
+
+//
+new dasBug($test);
 
 ?>
