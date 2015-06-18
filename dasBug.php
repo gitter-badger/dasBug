@@ -1,4 +1,11 @@
 <?php
+
+//
+namespace dasBug\dasBug;
+
+//
+use dBug\dBug\dBug;
+
 /**
  * dasBug class
  *
