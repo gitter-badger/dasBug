@@ -18,7 +18,7 @@ class dasBug{
 	public function __construct($module=false,$line=false){
 
 		//TODO: Get line number, associated function, etcs
-
+		//$this->process_debug_backtrace(debug_backtrace());
 
 		// get set module
 		if(isset($module) && !empty($module)){
@@ -82,13 +82,23 @@ class dasBug{
 		//
 		foreach ($module as $key => $value) {
 			
-			//
+			
+			// if value is array
+			if(is_array($value)){
+				
+				//
+				$value=$this->process_array_recursive($value,$type,$key);
+				
+			}
+
+			// set row
 			$row.="
 			<tr>\n
 				<td style=\"border:1px solid #ccc;background-color:#999;\">&nbsp;".$key."</td>
 				<td style=\"border:1px solid #ccc;\">&nbsp;".$value."</td>
 			</tr>\n
-			";			
+			";// end row
+			
 			
 		}// end for each
 		
@@ -97,6 +107,45 @@ class dasBug{
 
 
 	}// end process_array
+	
+	/**
+	* @param : $module = array
+	**/
+	public function process_array_recursive($module=false,$type=false,$pkey=false){
+		
+		//
+		$row="";
+		
+		//
+		foreach ($module as $key => $value) {
+			
+			
+			// if value is array
+			if(is_array($value)){
+				
+				//
+				$value=$this->process_array_recursive($value,$type,$pkey);
+				
+			}
+
+			// set row
+			$row.="
+			<tr>\n
+				<td style=\"border:1px solid #ddd;background-color:#888;\">&nbsp;".$key."</td>
+				<td style=\"border:1px solid #ddd;\">&nbsp;".$value."</td>
+			</tr>\n
+			";// end row
+						
+			
+		}// end for each
+		
+		
+		return "<table style=\"border:1px solid #ddd;\">".$row."</table>";
+
+
+	}// end process_array	
+	
+	
 	
 	/**
 	* @param : $module = array
@@ -114,7 +163,21 @@ class dasBug{
 		</table>";
 		
 	}// end process_string	
-	
+
+	/**
+	* @param : $module = array
+	**/
+	public function process_debug_backtrace($module=false){
+		
+		if(isset($module) && !empty($module)){
+			
+			// get set backtrace
+			$backtrace = $module;
+						
+		}
+		
+	}// end process_debug_backtrace()	
+		
 
 }// end of dasBug
 ?>
