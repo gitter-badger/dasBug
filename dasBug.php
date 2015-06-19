@@ -15,11 +15,9 @@ use dBug\dBug\dBug;
 class dasBug{
 
 	// constructor
-	public function __construct($module=false){
+	public function __construct($module=false,$line=false){
 
 		//TODO: Get line number, associated function, etcs
-
-		echo __LINE__ ;
 
 
 		// get set module
@@ -47,13 +45,23 @@ class dasBug{
 		// detect type
 		echo $type=gettype($module);
 
+		// get set array
 		if($type=='array'){
 
 			// array
-			$this->process_array($module); 
+			$this->process_array($module,$type); 
 
+		}// end type array
+		
+		// get set array
+		if($type=='string'){
+			
+			//
+			$this->process_string($module,$type);
 
-		}
+		}// end type array		
+		
+		
 
 		//is_numeric, is_bool, is_null, is_float, is_int, is_string, is_object, is_array
 
@@ -62,29 +70,51 @@ class dasBug{
 	/**
 	* @param : $module = array
 	**/
-	public function process_array($module=false){
-
-		echo "<pre>";
-		print_r($module);
-		echo "</pre>";
-
-		// start array loop
+	public function process_array($module=false,$type=false){
+		
+		//
+		$row="
+		<tr>
+			<td style=\"border:1px solid #ccc;background-color:#999;\" colspan=\"2\">".$type."</td>
+		</tr>
+		";
+		
+		//
 		foreach ($module as $key => $value) {
 			
-			//if key is array
-			if(is_array($key)){
+			//
+			$row.="
+			<tr>\n
+				<td style=\"border:1px solid #ccc;background-color:#999;\">&nbsp;".$key."</td>
+				<td style=\"border:1px solid #ccc;\">&nbsp;".$value."</td>
+			</tr>\n
+			";			
+			
+		}// end for each
+		
+		
+		echo "<table style=\"border:1px solid #ccc;\">".$row."</table>";
 
-				echo "<pre>";
-				print_r($key);
-				echo "</pre>";
 
-			}
-
-
-		}
-		// end 
-
-	}// end render
+	}// end process_array
+	
+	/**
+	* @param : $module = array
+	**/
+	public function process_string($module=false,$type=false){
+		
+		echo "
+		<table style=\"border:1px solid #ccc;\">
+			<tr>
+				<td style=\"border:1px solid #ccc;background-color:#999;\">&nbsp;".$type."</td>
+			</tr>
+			<tr>
+				<td style=\"border:1px solid #ccc;\">&nbsp;".$module."</td>
+			</tr>
+		</table>";
+		
+	}// end process_string	
+	
 
 }// end of dasBug
 ?>
