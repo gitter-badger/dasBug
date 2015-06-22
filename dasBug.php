@@ -157,7 +157,7 @@ class dasBug{
 			$row.="
 			<tr>\n
 				<td style=\"border:1px solid #ddd;background-color:#888;\">&nbsp;".$key."</td>
-				<td style=\"border:1px solid #ddd;\">&nbsp;".$value."</td>
+				<td style=\"border:1px solid #ddd;\" align=\"left\" valign=\"top\">&nbsp;".$value."</td>
 			</tr>\n
 			";// end row
 						
@@ -165,7 +165,7 @@ class dasBug{
 		}// end for each
 		
 		
-		return "<table style=\"border:1px solid #ddd;\">".$row."</table>";
+		return "<table style=\"border:1px solid #ddd;width:100%;margin:0px;padding:0px;\">".$row."</table>";
 
 
 	}// end process_array	
@@ -203,12 +203,13 @@ class dasBug{
 		
 	    foreach((array)debug_backtrace($Object ? DEBUG_BACKTRACE_PROVIDE_OBJECT : 0) as $aVal)
 	    {
-	        
+				
+	        //new dBug($aVal);
 			// if set file	
 			if(isset($aVal['file']) && !empty($aVal['file'])){
 				
 				// get set file
-				$row[$x]['file']     = $aVal['file'];
+				$row[$x]['file']= $aVal['file'];
 				
 			}
 			
@@ -216,9 +217,33 @@ class dasBug{
 			if(isset($aVal['line']) && !empty($aVal['line'])){
 				
 				// get set file
-				$row[$x]['line']     = $aVal['line'];
+				$row[$x]['line']= $aVal['line'];
 				
 			}			
+
+			// if set function	
+			if(isset($aVal['function']) && !empty($aVal['function'])){
+				
+				// get set function
+				$row[$x]['function']= $aVal['function'];
+				
+			}
+			
+			// if set class	
+			if(isset($aVal['class']) && !empty($aVal['class'])){
+				
+				// get set class
+				$row[$x]['class']= $aVal['class'];
+				
+			}			
+			
+			// if set args	
+			if(isset($aVal['args'][0]) && !empty($aVal['args'][0]) && is_array($aVal['args'][0])){
+				
+				// get set class
+				$row[$x]['args']= $aVal['args'];
+				
+			}
 				
 				
 	        //$row[$x]['file']     = $aVal['file'];
@@ -265,8 +290,8 @@ class dasBug{
 		// return $module
 		return $output;
 		
-	}// end process_json	
-		
+	}// end process_json
 
+	
 }// end of dasBug
 ?>
