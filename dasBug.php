@@ -81,20 +81,17 @@ class dasBug{
 		
 		//
 		foreach ($module as $key => $value) {
-			
-			// json
-			$json="";
-			
-			
-			// json
-			$value.=$this->process_json($value);
-			
-			
+
 			// if value is array
 			if(is_array($value)){
 				
 				//
 				$value=$this->process_array_recursive($value,$type,$key);
+				
+			} else {
+				
+				// json
+				$value=$this->process_json($value);				
 				
 			}
 						
