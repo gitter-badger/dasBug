@@ -91,7 +91,7 @@ class dasBug{
 			} else {
 				
 				// json
-				$value=$this->process_json($value);				
+				$value.=$this->process_json($value);				
 				
 			}
 						
