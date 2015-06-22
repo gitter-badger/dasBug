@@ -20,7 +20,7 @@ class dasBug{
 	public function __construct($module=false,$line=false){
 
 		//TODO: Get line number, associated function, etcs
-		$this->process_array($this->backtrace(),'INVOKED FILES');
+		$this->backtrace=$this->process_array($this->backtrace(),'INVOKED FILES',TRUE);
 
 		// get set module
 		if(isset($module) && !empty($module)){
@@ -96,10 +96,7 @@ class dasBug{
 				$value.=$this->process_json($value);				
 				
 			}
-						
-	
-				
-						
+												
 
 			// set row
 			$row.="
@@ -112,12 +109,24 @@ class dasBug{
 			
 		}// end for each
 		
-		
 		if($option==TRUE){
 			
 			return "<table style=\"border:1px solid red;\">".$row."</table>";
 			
 		} else {
+			
+			//
+			if(isset($this->backtrace) && !empty($this->backtrace)){
+				
+				//
+				$row.="
+				<tr>
+					<td style=\"border:1px solid #ccc;background-color:#999;\">FILES CALLED</td>
+					<td>".$this->backtrace."</td>
+				</tr>
+				";			
+			
+		}
 			
 			echo "<table style=\"border:1px solid #ccc;\">".$row."</table>";
 		}
