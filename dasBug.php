@@ -13,12 +13,14 @@ use dBug\dBug\dBug;
  * @author  Paul McIntosh
  */
 class dasBug{
+	
+	public $backtrace;
 
 	// constructor
 	public function __construct($module=false,$line=false){
 
 		//TODO: Get line number, associated function, etcs
-		//$this->process_debug_backtrace(debug_backtrace());
+		$this->process_array($this->backtrace(),'INVOKED FILES');
 
 		// get set module
 		if(isset($module) && !empty($module)){
@@ -42,7 +44,7 @@ class dasBug{
 		// datatype
 		$type="";
 
-		// detect type
+		//TODO: Remove echo detect type
 		echo $type=gettype($module);
 
 		// get set array
@@ -181,16 +183,44 @@ class dasBug{
 	/**
 	* @param : $module = array
 	**/
-	public function process_debug_backtrace($module=false){
+	public function backtrace($Object=false) {
+	   
+	    // counter	
+	    $x = 0;
 		
-		if(isset($module) && !empty($module)){
+		//
+		$row=array();
+		
+		
+	    foreach((array)debug_backtrace($Object ? DEBUG_BACKTRACE_PROVIDE_OBJECT : 0) as $aVal)
+	    {
+	        
+			// if set file	
+			if(isset($aVal['file']) && !empty($aVal['file'])){
+				
+				// get set file
+				$row[$x]['file']     = $aVal['file'];
+				
+			}
 			
-			// get set backtrace
-			$backtrace = $module;
-						
-		}
-		
-	}// end process_debug_backtrace()
+			// if set line	
+			if(isset($aVal['line']) && !empty($aVal['line'])){
+				
+				// get set file
+				$row[$x]['line']     = $aVal['line'];
+				
+			}			
+				
+				
+	        //$row[$x]['file']     = $aVal['file'];
+	        //$row[$x]['line']     = $aVal['line'];
+	        //$row[$x]['function'] = $aVal['function'];
+	        //$row[$x]['class']    = $aVal['class'];
+	        //$row[$x]['args']     = $aVal['args'];
+	        ++$x;
+	    }
+	    return $row;
+	}
 	
 	
 	/**
