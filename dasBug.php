@@ -70,7 +70,7 @@ class dasBug{
 	/**
 	* @param : $module = array
 	**/
-	public function process_array($module=false,$type=false){
+	public function process_array($module=false,$type=false,$option=false){
 		
 		//
 		$row="
@@ -82,6 +82,13 @@ class dasBug{
 		//
 		foreach ($module as $key => $value) {
 			
+			// json
+			$json="";
+			
+			
+			// json
+			$value.=$this->process_json($value);
+			
 			
 			// if value is array
 			if(is_array($value)){
@@ -90,6 +97,10 @@ class dasBug{
 				$value=$this->process_array_recursive($value,$type,$key);
 				
 			}
+						
+	
+				
+						
 
 			// set row
 			$row.="
@@ -103,8 +114,14 @@ class dasBug{
 		}// end for each
 		
 		
-		echo "<table style=\"border:1px solid #ccc;\">".$row."</table>";
-
+		if($option==TRUE){
+			
+			return "<table style=\"border:1px solid red;\">".$row."</table>";
+			
+		} else {
+			
+			echo "<table style=\"border:1px solid #ccc;\">".$row."</table>";
+		}
 
 	}// end process_array
 	
@@ -176,7 +193,43 @@ class dasBug{
 						
 		}
 		
-	}// end process_debug_backtrace()	
+	}// end process_debug_backtrace()
+	
+	
+	/**
+	* @param : $module = array
+	**/
+	public function process_json($module=false){
+		
+		// search for opening bracket
+		$search="{";
+		
+		//output
+		$output="";
+		
+		if(isset($module) && !empty($module)){			
+
+			// find match
+			if(strpos($module, $search) !==false){
+				
+				// get set json
+				$output=$this->process_array(json_decode($module,TRUE),'Json',TRUE);
+				
+			} else {
+				
+				//
+				$output=$module;
+				
+			}// end find match
+
+			
+		}// end if $module
+		
+		
+		// return $module
+		return $output;
+		
+	}// end process_json	
 		
 
 }// end of dasBug
