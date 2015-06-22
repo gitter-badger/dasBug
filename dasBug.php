@@ -83,6 +83,9 @@ class dasBug{
 		
 		//
 		foreach ($module as $key => $value) {
+			
+			//
+			$json="";
 
 			// if value is array
 			if(is_array($value)){
@@ -244,6 +247,13 @@ class dasBug{
 				$row[$x]['args']= $aVal['args'];
 				
 			}
+			// if set type	
+			if(isset($aVal['type']) && !empty($aVal['type'])){
+				
+				// get set type
+				$row[$x]['type']= $aVal['type'];
+				
+			}
 				
 				
 	        //$row[$x]['file']     = $aVal['file'];
@@ -287,8 +297,13 @@ class dasBug{
 		}// end if $module
 		
 		
-		// return $module
-		return $output;
+		if($module!=$output){
+			
+			// return $module
+			return $output;
+		}
+		
+
 		
 	}// end process_json
 
