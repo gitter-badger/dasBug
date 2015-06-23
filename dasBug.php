@@ -74,65 +74,76 @@ class dasBug{
 	**/
 	public function process_array($module=false,$type=false,$option=false){
 		
-		//
-		$row="
-		<tr>
-			<td style=\"border:1px solid #ccc;background-color:#999;\" colspan=\"2\">".$type."</td>
-		</tr>
-		";
-		
-		//
-		foreach ($module as $key => $value) {
+		// if module
+		if(isset($module) && !empty($module)){
+			
 			
 			//
-			$json="";
-
-			// if value is array
-			if(is_array($value)){
+			$row="
+			<tr>
+				<td style=\"border:1px solid #ccc;background-color:#999;\" colspan=\"2\">".$type."</td>
+			</tr>
+			";
+			
+			//
+			foreach ($module as $key => $value) {
+				
+				//new dBUg(array($key => $value));
 				
 				//
-				$value=$this->process_array_recursive($value,$type,$key);
+				$json="";
+	
+				// if value is array
+				if(is_array($value)){
+					
+					//
+					$value=$this->process_array_recursive($value,$type,$key);
+					
+				} else {
+					
+					// json
+					$value.=$this->process_json($value);				
+					
+				}
+													
+	
+				// set row
+				$row.="
+				<tr>\n
+					<td style=\"border:1px solid #ccc;background-color:#999;\">&nbsp;".$key."</td>
+					<td style=\"border:1px solid #ccc;\">&nbsp;".$value."</td>
+				</tr>\n
+				";// end row
+				
+				
+			}// end for each
+			
+			if($option==TRUE){
+				
+				return "<table style=\"border:1px solid red;\">".$row."</table>";
 				
 			} else {
 				
-				// json
-				$value.=$this->process_json($value);				
+				//
+				if(isset($this->backtrace) && !empty($this->backtrace)){
+					
+					//
+					$row.="
+					<tr>
+						<td style=\"border:1px solid #ccc;background-color:#999;\">FILES CALLED</td>
+						<td>".$this->backtrace."</td>
+					</tr>
+					";			
 				
 			}
-												
-
-			// set row
-			$row.="
-			<tr>\n
-				<td style=\"border:1px solid #ccc;background-color:#999;\">&nbsp;".$key."</td>
-				<td style=\"border:1px solid #ccc;\">&nbsp;".$value."</td>
-			</tr>\n
-			";// end row
-			
-			
-		}// end for each
-		
-		if($option==TRUE){
-			
-			return "<table style=\"border:1px solid red;\">".$row."</table>";
-			
-		} else {
-			
-			//
-			if(isset($this->backtrace) && !empty($this->backtrace)){
 				
-				//
-				$row.="
-				<tr>
-					<td style=\"border:1px solid #ccc;background-color:#999;\">FILES CALLED</td>
-					<td>".$this->backtrace."</td>
-				</tr>
-				";			
+				echo "<table style=\"border:1px solid #ccc;\">".$row."</table>";
+			}
 			
-		}
 			
-			echo "<table style=\"border:1px solid #ccc;\">".$row."</table>";
-		}
+			
+		}// end $module
+		
 
 	}// end process_array
 	
