@@ -105,13 +105,20 @@ class dasBug{
 					$value.=$this->process_json($value);				
 					
 				}
+				
+				
+				if(is_dir($key)){
+					
+					$key = "[directory]".$key;
+					
+				}
 													
 	
 				// set row
 				$row.="
 				<tr>\n
-					<td style=\"border:1px solid #ccc;background-color:#999;\">&nbsp;".$key."</td>
-					<td style=\"border:1px solid #ccc;\">&nbsp;".$value."</td>
+					<td style=\"border:1px solid #ccc;background-color:#999;font-weight:bold;\">&nbsp;".$key."</td>
+					<td style=\"border:1px solid #ccc;font-weight:normal;\">&nbsp;".$value."</td>
 				</tr>\n
 				";// end row
 				
@@ -137,7 +144,7 @@ class dasBug{
 				
 			}
 				
-				echo "<table style=\"border:1px solid #ccc;\">".$row."</table>";
+				echo "<table style=\"border:1px solid #ccc;font-family:arial,helvetica,sans-serif;\">".$row."</table>";
 			}
 			
 			
@@ -164,6 +171,14 @@ class dasBug{
 				
 				//
 				$value=$this->process_array_recursive($value,$type,$pkey);
+				
+			}
+			
+			
+			
+			if(is_dir($key)){
+				
+				$key = "[directory]".$key;
 				
 			}
 
